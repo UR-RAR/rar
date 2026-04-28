@@ -1,0 +1,73 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap');
+@import "tailwindcss";
+
+@layer base {
+  body, html, * {
+    cursor: url("data:image/svg+xml,%3Csvg width='20' height='24' viewBox='0 0 40 48' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M 8 8 L 8 38 L 16 30 L 24 40 L 28 37 L 20 27 L 32 27 Z' fill='%234d8802'/%3E%3Cpath d='M 4 4 L 4 34 L 12 26 L 20 36 L 24 33 L 16 23 L 28 23 Z' fill='%2380e600'/%3E%3Crect x='6' y='10' width='3' height='12' rx='1.5' fill='white' /%3E%3Ccircle cx='7.5' cy='26' r='1.5' fill='white' /%3E%3C/svg%3E") 2 2, auto !important;
+  }
+}
+
+@layer utilities {
+  .scrollbar-green::-webkit-scrollbar,
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  .scrollbar-green::-webkit-scrollbar-track,
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  /* Make thumb totally transparent initially */
+  .scrollbar-green::-webkit-scrollbar-thumb,
+  ::-webkit-scrollbar-thumb {
+    background-color: transparent;
+    border-radius: 10px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+  }
+
+  /* Show it only when scrolling is active */
+  body.is-scrolling ::-webkit-scrollbar-thumb,
+  .scrollbar-green.is-scrolling::-webkit-scrollbar-thumb {
+    background-color: #0ceb3f;
+    border: 0;
+  }
+
+  /* Or when actively hovered */
+  ::-webkit-scrollbar-thumb:hover,
+  .scrollbar-green::-webkit-scrollbar-thumb:hover,
+  body.is-scrolling ::-webkit-scrollbar-thumb:hover,
+  .scrollbar-green.is-scrolling::-webkit-scrollbar-thumb:hover {
+    background-color: #0ac735;
+    border: 0;
+  }
+}
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Playfair Display", ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+
+  --color-primary: #111111;
+  --color-accent: #b7ff00;
+}
+
+@layer base {
+  body {
+    @apply font-sans bg-white text-gray-900 antialiased selection:bg-accent selection:text-black;
+  }
+}
+
+@layer utilities {
+  @keyframes blink {
+    0%, 92%, 100% {
+      transform: scaleY(1);
+    }
+    96% {
+      transform: scaleY(0.1);
+    }
+  }
+  .animate-blink {
+    animation: blink 4s infinite;
+  }
+}
