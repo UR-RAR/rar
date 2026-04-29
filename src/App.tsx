@@ -112,7 +112,7 @@ function HeroSection() {
             </div>
 
             <p className="text-[11px] font-medium text-gray-600 leading-snug">
-                Trusted by you <span className="text-xl">😊</span> (I Think So)
+                Trusted by you <span className="text-xl">⌚</span> (I Think So)
               </p>
           </motion.div>
 
