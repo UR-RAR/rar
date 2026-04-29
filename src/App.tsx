@@ -109,11 +109,6 @@ function HeroSection() {
               <span className="text-sm font-semibold tracking-tight text-gray-800 pr-2">Available for projects now</span>
             </div>
 
-            <p className="text-[11px] font-medium text-gray-600 leading-snug">
-                Trusted by you <img src="https://i.redd.it/if-you-are-a-ben10-fan-you-will-love-this-a-free-omnitrix-v0-wycgx2gnbqj51.png?width=496&format=png&auto=webp&s=afbfe5c3cf6177e46658a987dfd031d59cc3c691" alt="Ben 10" className="w-5 h-5 inline" /> (I Think So)
-              </p>
-          </motion.div>
-
           {/* The Actual Image Overlapping */}
           <motion.div
             initial={{ opacity: 0, y: 40 }}
