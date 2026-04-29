@@ -105,9 +105,7 @@ function HeroSection() {
             className="hidden lg:flex flex-col gap-12 absolute left-0 lg:left-[2%] top-[10%] xl:top-[12%] z-30"
           >
             <div className="flex items-center gap-3 bg-white/90 backdrop-blur-md rounded-full pl-2 pr-4 py-2 shadow-xl shadow-black/5 border border-white w-max">
-              <div className="w-8 h-8 rounded-full bg-[#b7ff00] flex items-center justify-center border-4 border-white shadow-sm">
-                <div className="w-2 h-2 rounded-full bg-white animate-[ping_2s_ease-in-out_infinite]"></div>
-              </div>
+              <img src="https://cdn.modrinth.com/data/ZeVD5ZBy/b648f2683cd0bf1e09c784ff814d71ba02180305.gif" alt="Available" className="w-8 h-8 rounded-full object-cover" />
               <span className="text-sm font-semibold tracking-tight text-gray-800 pr-2">Available for projects now</span>
             </div>
 
