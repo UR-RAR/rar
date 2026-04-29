@@ -76,7 +76,7 @@ function HeroSection() {
            <div className="w-5 h-5 rounded-full bg-white flex items-center justify-center border border-gray-200 shadow-sm shadow-gray-100/50">
               <div className="w-1.5 h-1.5 bg-[#b7ff00] rounded-full shadow-[0_0_8px_#b7ff00]"></div>
            </div>
-           <span className="text-gray-800 tracking-wide uppercase">Premium Quality Builder 25.0</span>
+           <span className="text-gray-800 tracking-wide uppercase">Become RARE with RAR</span>
         </motion.div>
 
         {/* Headings */}
@@ -111,16 +111,9 @@ function HeroSection() {
               <span className="text-sm font-semibold tracking-tight text-gray-800 pr-2">Available for projects now</span>
             </div>
 
-            <div className="flex items-center gap-4 bg-transparent max-w-[200px]">
-              <div className="flex -space-x-3">
-                 <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=100&auto=format&fit=crop" alt="Client 1" className="w-[38px] h-[38px] rounded-full border-2 border-[#fbfdf7] object-cover bg-gray-200 shadow-sm" />
-                 <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=100&auto=format&fit=crop" alt="Client 2" className="w-[38px] h-[38px] rounded-full border-2 border-[#fbfdf7] object-cover bg-gray-300 shadow-sm" />
-                 <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=100&auto=format&fit=crop" alt="Client 3" className="w-[38px] h-[38px] rounded-full border-2 border-[#fbfdf7] object-cover bg-gray-400 shadow-sm" />
-              </div>
-              <p className="text-[11px] font-medium text-gray-600 leading-snug">
-                Trusted by over <strong className="text-gray-900 font-bold">1200+ happy clients</strong> globally.
+            <p className="text-[11px] font-medium text-gray-600 leading-snug">
+                Trusted by you <span className="text-xl">😊</span> (I Think So)
               </p>
-            </div>
           </motion.div>
 
           {/* The Actual Image Overlapping */}
@@ -434,7 +427,7 @@ function WhyMeSection() {
           <div className="grid grid-cols-2 gap-4 lg:gap-8">
             {[
               { label: "Started Building", value: "< 15" },
-              { label: "Projects Built", value: "004" },
+              { label: "Projects Built", value: "-" },
               { label: "Based In", value: "Pakistan" },
               { label: "Vision", value: "Global" },
             ].map((stat, i) => (
