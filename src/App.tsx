@@ -253,17 +253,20 @@ function ServicesSection() {
           </p>
         </div>
 
-        {/* Pricing Mode Toggle */}
-        <div className="flex items-center justify-center gap-4 mb-6">
-          <span className={`px-3 py-2 rounded-md text-sm font-semibold ${mode === "setup" ? 'bg-black text-white' : 'text-gray-700'}`} onClick={() => setMode("setup")} style={{ cursor: 'pointer' }}>
+        {/* Pricing Mode Toggle (simplified) */}
+        <div className="flex gap-3 justify-center mb-6">
+          <button
+            className={`px-4 py-2 rounded-md text-sm font-semibold ${mode === "setup" ? 'bg-black text-white' : 'bg-white text-gray-700 border border-gray-200'} `}
+            onClick={() => setMode("setup")}
+          >
             Setup
-          </span>
-          <div className="w-20 h-8 bg-gray-200 rounded-full flex items-center px-1 cursor-pointer" onClick={() => setMode(mode === 'setup' ? 'monthly' : 'setup')} style={{ userSelect: 'none' }}>
-            <div className={`h-6 w-6 bg-white rounded-full shadow-md transform ${mode === 'setup' ? 'translate-x-0' : 'translate-x-12'}`} style={{ transition: 'transform 200ms' }} />
-          </div>
-          <span className={`px-3 py-2 rounded-md text-sm font-semibold ${mode === "monthly" ? 'bg-black text-white' : 'text-gray-700'}`} onClick={() => setMode("monthly")} style={{ cursor: 'pointer' }}>
+          </button>
+          <button
+            className={`px-4 py-2 rounded-md text-sm font-semibold ${mode === "monthly" ? 'bg-black text-white' : 'bg-white text-gray-700 border border-gray-200'} `}
+            onClick={() => setMode("monthly")}
+          >
             Monthly
-          </span>
+          </button>
         </div>
         
         {/* Pricing Cards */}
