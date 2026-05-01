@@ -917,7 +917,7 @@ function Chatbot() {
           onPointerDown={(e) => { e.preventDefault(); e.stopPropagation(); setIsOpen(!isOpen); }}
           onClick={(e) => { e.preventDefault(); e.stopPropagation(); setIsOpen(!isOpen); }}
           style={{ zIndex: 99999, pointerEvents: 'auto' }}
-          className="fixed bottom-6 right-6 w-14 h-14 bg-black border-[3px] border-[#0ceb3f] rounded-full flex items-center justify-center shadow-[0_0_20px_rgba(12,235,63,0.4)] hover:scale-110 active:scale-95 transition-transform group cursor-pointer relative"
+          className="fixed bottom-8 right-6 w-14 h-14 bg-black border-[3px] border-[#0ceb3f] rounded-full flex items-center justify-center shadow-[0_0_20px_rgba(12,235,63,0.4)] hover:scale-110 active:scale-95 transition-transform group cursor-pointer relative"
       >
         <svg viewBox="0 0 100 100" className="w-10 h-10 group-hover:rotate-180 transition-transform duration-300 ease-in-out drop-shadow-[0_0_8px_rgba(12,235,63,0.5)] pointer-events-none">
           <circle cx="50" cy="50" r="48" fill="black" />
