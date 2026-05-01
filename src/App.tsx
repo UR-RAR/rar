@@ -536,6 +536,7 @@ function ContactSection() {
 
 function Chatbot() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
   const [messages, setMessages] = useState<{ role: 'user' | 'bot'; text: string; isContactAction?: boolean }[]>([]);
   const [input, setInput] = useState("");
   const [isScrolling, setIsScrolling] = useState(false);
@@ -552,6 +553,20 @@ function Chatbot() {
       setMessages([{ role: 'bot', text: "Hey, I'm Azmuth. I know everything about RAR - services, pricing (discounts too!), why businesses need a website, and why you should choose him. Say 'I am [Your Name]' and I'll help you personally!" }]);
     }
   }, [isOpen, messages.length]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const heroSection = document.querySelector('section');
+      if (heroSection) {
+        const heroBottom = heroSection.getBoundingClientRect().bottom;
+        setIsVisible(heroBottom < 100);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const handleSend = () => {
     if (!input.trim()) return;
@@ -911,13 +926,22 @@ function Chatbot() {
   };
 
   return (
-    <>
+    <motion.div
+      initial={{ opacity: 0, scale: 0.8 }}
+      animate={{ 
+        opacity: isVisible ? 1 : 0, 
+        scale: isVisible ? 1 : 0.8,
+        pointerEvents: isVisible ? 'auto' : 'none'
+      }}
+      transition={{ duration: 0.3, ease: "easeOut" }}
+      className="fixed bottom-6 right-6 z-[99999]"
+      style={{ pointerEvents: isVisible ? 'auto' : 'none' }}
+    >
       <button
           type="button"
           onPointerDown={(e) => { e.preventDefault(); e.stopPropagation(); setIsOpen(!isOpen); }}
           onClick={(e) => { e.preventDefault(); e.stopPropagation(); setIsOpen(!isOpen); }}
-          style={{ zIndex: 99999, pointerEvents: 'auto' }}
-          className="fixed bottom-8 right-6 w-14 h-14 bg-black border-[3px] border-[#0ceb3f] rounded-full flex items-center justify-center shadow-[0_0_20px_rgba(12,235,63,0.4)] hover:scale-110 active:scale-95 transition-transform group cursor-pointer relative"
+          className="w-14 h-14 bg-black border-[3px] border-[#0ceb3f] rounded-full flex items-center justify-center shadow-[0_0_20px_rgba(12,235,63,0.4)] hover:scale-110 active:scale-95 transition-transform group cursor-pointer relative"
       >
         <svg viewBox="0 0 100 100" className="w-10 h-10 group-hover:rotate-180 transition-transform duration-300 ease-in-out drop-shadow-[0_0_8px_rgba(12,235,63,0.5)] pointer-events-none">
           <circle cx="50" cy="50" r="48" fill="black" />
@@ -934,7 +958,7 @@ function Chatbot() {
            initial={{ opacity: 0, y: 20, scale: 0.95 }}
            animate={{ opacity: 1, y: 0, scale: 1 }}
            transition={{ duration: 0.15, ease: "easeOut" }}
-           className="fixed bottom-24 right-6 w-[320px] max-w-[calc(100vw-48px)] bg-[#fdfdfd] border-[3px] border-white rounded-[2rem] z-[99999] shadow-[0_25px_50px_rgba(12,235,63,0.25),0_0_0_4px_#0ceb3f,inset_0_5px_15px_rgba(255,255,255,1)] flex flex-col font-sans overflow-hidden"
+           className="absolute bottom-20 right-0 w-[320px] max-w-[calc(100vw-48px)] bg-[#fdfdfd] border-[3px] border-white rounded-[2rem] z-[99999] shadow-[0_25px_50px_rgba(12,235,63,0.25),0_0_0_4px_#0ceb3f,inset_0_5px_15px_rgba(255,255,255,1)] flex flex-col font-sans overflow-hidden"
         >
           {/* Global Shiny Gloss Overlays */}
           <div className="absolute inset-x-0 top-0 h-[100px] bg-gradient-to-b from-white/90 to-transparent pointer-events-none z-30 mix-blend-overlay" />
@@ -980,14 +1004,18 @@ function Chatbot() {
                      {msg.role === 'bot' && <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent pointer-events-none" />}
                      <span className="relative z-10">{msg.text}</span>
                      {msg.isContactAction && (
-                        <a 
-                          href="#contact" 
-                          onClick={() => setIsOpen(false)}
-                          className="mt-4 block w-full py-2.5 px-3 bg-[#0ceb3f]/10 text-[#0ceb3f] text-center rounded-lg border border-[#0ceb3f]/50 hover:bg-[#0ceb3f] hover:text-black transition-colors font-bold tracking-[0.2em] text-xs relative z-10 overflow-hidden group"
+                        <button
+                          onClick={() => {
+                            setIsOpen(false);
+                            setTimeout(() => {
+                              document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+                            }, 100);
+                          }}
+                          className="mt-4 block w-full py-2.5 px-3 bg-[#0ceb3f]/10 text-[#0ceb3f] text-center rounded-lg border border-[#0ceb3f]/50 hover:bg-[#0ceb3f] hover:text-black transition-colors font-bold tracking-[0.2em] text-xs relative z-10 overflow-hidden group cursor-pointer"
                         >
                            <div className="absolute top-0 left-0 w-full h-1/2 bg-white/10 pointer-events-none group-hover:bg-white/30" />
                            ASK RAR
-                        </a>
+                        </button>
                      )}
                    </div>
                 </div>
@@ -1015,6 +1043,6 @@ function Chatbot() {
           </div>
         </motion.div>
       )}
-    </>
+    </motion.div>
   );
 }
