@@ -97,7 +97,7 @@ function HeroSection() {
         {/* Main Interactive Row (Image + Floating Text) */}
         <div className="relative w-full flex-1 flex flex-col lg:block mt-8 lg:mt-0 min-h-[45vh] md:min-h-[50vh]">
           
-          {/* Left Side Floating (Desktop) */}
+{/* Left Side Floating (Desktop) */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
@@ -108,6 +108,7 @@ function HeroSection() {
               <img src="https://cdn.modrinth.com/data/ZeVD5ZBy/b648f2683cd0bf1e09c784ff814d71ba02180305.gif" alt="Available" className="w-8 h-8 rounded-full object-cover" />
               <span className="text-sm font-semibold tracking-tight text-gray-800 pr-2">Available for projects now</span>
             </div>
+          </motion.div>
 
           {/* The Actual Image Overlapping */}
           <motion.div
@@ -117,14 +118,14 @@ function HeroSection() {
             className="w-[90%] max-w-[340px] md:max-w-[450px] lg:max-w-[550px] mx-auto z-20 relative lg:absolute lg:bottom-0 lg:left-1/2 lg:-translate-x-1/2 flex justify-center items-end h-[100%] lg:h-[120%]"
           >
              <img
-               src={meImage}
-               alt="Raja Abdul Rehman"
-               className="w-full h-auto object-contain object-bottom drop-shadow-[0_20px_40px_rgba(0,0,0,0.1)]"
-               style={{ 
-                 maskImage: 'linear-gradient(to bottom, black 80%, transparent 100%)', 
-                 WebkitMaskImage: 'linear-gradient(to bottom, black 80%, transparent 100%)' 
-               }}
-             />
+                src={meImage}
+                alt="Raja Abdul Rehman"
+                className="w-full h-auto object-contain object-bottom drop-shadow-[0_20px_40px_rgba(0,0,0,0.1)]"
+                style={{ 
+                  maskImage: 'linear-gradient(to bottom, black 80%, transparent 100%)', 
+                  WebkitMaskImage: 'linear-gradient(to bottom, black 80%, transparent 100%)' 
+                }}
+              />
           </motion.div>
 
           {/* Right Side Floating (Desktop) */}
@@ -187,7 +188,8 @@ function HeroSection() {
   );
 }
 
-const pricingPlans = [
+// Pricing in two modes: Setup (one-time) and Monthly (subscription)
+const setupPlans = [
   {
     name: "Starter Website",
     price: "$50-$150",
@@ -206,76 +208,39 @@ const pricingPlans = [
   },
 ];
 
+const monthlyPlans = [
+  {
+    name: "Starter Monthly",
+    price: "$197 / month",
+    features: [
+      "AI chatbot integration",
+      "Email & chat support",
+      "SEO basics & analytics",
+      "Content generation tools",
+      "1 monthly website optimization",
+    ],
+  },
+  {
+    name: "Pro Monthly",
+    price: "$279 / month",
+    features: [
+      "AI chatbot with advanced intents",
+      "Priority support and onboarding",
+      "AI-powered marketing automations",
+      "Dedicated assistant for your project",
+      "Monthly analytics & insights dashboard",
+    ],
+    popular: true,
+  },
+];
+
 function ServicesSection() {
-  // Pricing mode toggle: setup vs monthly
   const [mode, setMode] = useState<"setup" | "monthly">("setup");
-
-  // Setup prize (one-time) plans
-  const setupPlans = [
-    {
-      name: "Setup Prize",
-      basePrice: 1000,
-      price: "One-time",
-      features: [
-        "Project scoping & kickoff",
-        "Initial design & branding guidelines",
-        "Content migration (up to 5 pages)",
-        "Basic on-page SEO setup",
-        "Technical architecture & deployment plan",
-      ],
-    },
-  ];
-
-  // Monthly prize plans
-  const monthlyPlans = [
-    {
-      name: "AI Starter Monthly",
-      price: "$197 / month",
-      features: [
-        "AI chatbot integration for user support",
-        "Priority support (24-48h response)",
-        "Analytics dashboard with insights",
-        "Content Management System access",
-        "Premium templates & components",
-        "Hosting & deployment included",
-        "Monthly feature updates",
-        "SSL certificate included",
-      ],
-    },
-    {
-      name: "AI Pro Monthly",
-      price: "$279 / month",
-      features: [
-        "AI chatbot with advanced intents & training",
-        "CRM integration options",
-        "Dedicated account manager",
-        "Custom domain & advanced SSL",
-        "Uptime SLA & security hardening",
-        "Weekly performance reports",
-        "Priority feature development requests",
-        "Access to beta features",
-      ],
-    },
-  ];
-
-  // Choose which plans to render based on mode
-  const plansToRender = mode === "setup" ? setupPlans : monthlyPlans;
-
-  // Helper to render price string, including discount for Setup Prize when monthly mode
-  const renderPrice = (plan: any) => {
-    // If this is the Setup Prize and monthly mode is active, apply 40% off
-    if (plan.name === "Setup Prize" && mode === "monthly") {
-      const base = plan.basePrice ?? 1000;
-      const discounted = Math.round(base * 0.6);
-      return `$${discounted} / one-time`;
-    }
-    return plan.price;
-  };
-
+  const plans = mode === "setup" ? setupPlans : monthlyPlans;
   return (
     <section className="py-32 px-6 lg:px-10 bg-gray-50 relative">
       <div className="max-w-6xl mx-auto">
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-8">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-6 gap-8">
           <div>
             <span className="text-xs font-bold uppercase tracking-[0.2em] text-gray-400 block mb-4">
               01 / What I Build
@@ -289,26 +254,26 @@ function ServicesSection() {
           </p>
         </div>
 
-        {/* Pricing mode toggle */}
-        <div className="flex items-center justify-end mb-6">
-          <div className="flex rounded-full bg-white border border-gray-200 p-1 shadow-sm" aria-label="Pricing Toggle">
-            <button
-              onClick={() => setMode("setup")}
-              className={`px-5 py-2 rounded-full font-semibold text-sm ${mode === "setup" ? "bg-gray-900 text-white" : "bg-white text-gray-800"} transition-colors`}
-            >
-              Setup Prize
-            </button>
-            <button
-              onClick={() => setMode("monthly")}
-              className={`px-5 py-2 rounded-full font-semibold text-sm ${mode === "monthly" ? "bg-gray-900 text-white" : "bg-white text-gray-800"} transition-colors`}
-            >
-              Monthly Prize
-            </button>
-          </div>
+        {/* Pricing Mode Toggle (simplified) */}
+        <div className="flex gap-3 justify-center mb-6">
+          <button
+            className={`px-4 py-2 rounded-md text-sm font-semibold ${mode === "setup" ? 'bg-black text-white' : 'bg-white text-gray-700 border border-gray-200'} `}
+            onClick={() => setMode("setup")}
+          >
+            Setup
+          </button>
+          <button
+            className={`px-4 py-2 rounded-md text-sm font-semibold ${mode === "monthly" ? 'bg-black text-white' : 'bg-white text-gray-700 border border-gray-200'} `}
+            onClick={() => setMode("monthly")}
+          >
+            Monthly
+          </button>
         </div>
-
+        
+        {/* Pricing Cards */}
+      
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {plansToRender.map((plan, i) => (
+          {plans.map((plan, i) => (
             <motion.div
               key={i}
               initial={{ opacity: 0, y: 40 }}
@@ -325,10 +290,7 @@ function ServicesSection() {
                 </div>
               )}
               <h3 className="text-2xl font-semibold mb-2">{plan.name}</h3>
-              <div className="text-4xl font-serif mb-8 text-gray-900">{renderPrice(plan)}</div>
-              {plan.name === "Setup Prize" && mode === "monthly" && (
-                <div className="text-sm text-gray-500">Was ${plan.basePrice ?? 1000} before discount</div>
-              )}
+              <div className="text-4xl font-serif mb-8 text-gray-900">{ (plan.price as any) }</div>
               
               <ul className="space-y-4 mb-10">
                 {plan.features.map((feature, j) => (
@@ -587,7 +549,7 @@ function Chatbot() {
 
   useEffect(() => {
     if (isOpen && messages.length === 0) {
-      setMessages([{ role: 'bot', text: 'Hey, I am Azmuth (AI Assistant)! Ask me anything about my work, my target, or my pricing.' }]);
+      setMessages([{ role: 'bot', text: "Hey, I'm Azmuth. I know everything about RAR - services, pricing (discounts too!), why businesses need a website, and why you should choose him. Say 'I am [Your Name]' and I'll help you personally!" }]);
     }
   }, [isOpen, messages.length]);
 
@@ -604,118 +566,344 @@ function Chatbot() {
       const lowerInput = userMessage.toLowerCase();
 
       const intents = [
-        // Identity & Background
+        // ==================== IDENTITY & BACKGROUND ====================
         {
-          patterns: [/\b(who is rar|who is raja|who are you|about you|your story|who is this)\b/],
+          patterns: [/\b(who is rar|who is raja|who are you|about you|your story|who is this|introduce yourself)\b/],
           response: "I'm Azmuth, speaking on behalf of Raja Abdul Rehman (RAR)! He is a 14-year-old web developer and AI builder from Mansehra, Pakistan, who started building before turning 15."
         },
         {
-          patterns: [/\b(age|how old|when were you born)\b/],
+          patterns: [/\b(age|how old|when were you born|year born)\b/],
           response: "Raja is 14 years old right now, but he has the skills of a veteran developer!"
         },
         {
-          patterns: [/\b(where do you live|where are you from|location|mansehra|pakistan)\b/],
-          response: "Raja is proudly from Mansehra, KPK, Pakistan, but he works with clients globally."
-        },
-        // Goals & Vision
-        {
-          patterns: [/\b(target|goal|vision|mission|9999|change the world|dream)\b/],
-          response: "Raja's ultimate target is to hit $9999T and change the world forever through AI and software."
-        },
-        // Skills & Tech
-        {
-          patterns: [/\b(skills|tech stack|languages|tools|react|tailwind|node|javascript|framework|code)\b/],
-          response: "Raja specializes in React, Tailwind CSS, Next.js, Node.js, AI integrations, Three.js for 3D interactions, and clean, high-performance web development."
+          patterns: [/\b(where do you live|where are you from|location|mansehra|pakistan|country)\b/],
+          response: "Raja is proudly from Mansehra, Khyber Pakhtunkhwa, Pakistan, but he works with clients globally from all around the world."
         },
         {
-          patterns: [/\b(3d|animations|motion|animated|gsap)\b/],
-          response: "Yes! Raja builds immersive 3D experiences and ultra-smooth animations using modern tools like motion/react and custom CSS magic to make websites feel alive."
+          patterns: [/\b(your name|full name|real name)\b/],
+          response: "His name is Raja Abdul Rehman, but everyone calls him RAR!"
         },
-        // Services & Pricing
         {
-          patterns: [/\b(price|cost|how much|quote|estimate|budget|cheap|expensive)\b/],
-          response: "Pricing is highly flexible. Starter sites begin around $50, while premium AI-powered or 3D web applications can scale up to $10k depending on the complexity. Oh, and Raja offers free demo websites to select clients!"
+          patterns: [/\b(what do you do|your profession|what are you)\b/],
+          response: "Raja is a full-stack web developer and AI product builder. He builds stunning websites, powerful web applications, and intelligent AI tools."
         },
+        {
+          patterns: [/\b(how did you start|when did you start coding|how did you learn|from where you learned)\b/],
+          response: "Raja started coding at a very young age and self-taught most of his skills. His passion for building things led him to master web development and AI integration all before turning 15!"
+        },
+        // ==================== WHY CHOOSE RAR / RAJA ====================
+        {
+          patterns: [/why.*choose.*(you|rar|raja)/i, /why.*should.*i.*(hire|choose|work with)/i, /why.*your.*services/i, /why.*pick.*you/i, /why.*work.*with.*you/i, /why.*better.*than/i, /why.*i.*choose/i, /reason.*hire/i, /benefit.*working/i],
+          response: "Great question! Here's why you should choose RAR: 1) Premium quality at competitive prices - you get more value for your money. 2) Fast turnaround without compromising quality - your project delivered quickly. 3) Personal attention - you work directly with the developer, no middleman. 4) Cutting-edge tech skills including AI integration and 3D experiences. 5) Young, hungry, and motivated to prove himself - he treats every project like it's his own. 6) Free demo websites for select clients! 7) Raja CAN give you discounts too - just ask about special offers!"
+        },
+        {
+          patterns: [/\b(what makes you different|unique|special|why are you special)\b/],
+          response: "What makes Raja special: He's a 14-year-old with skills that rival industry veterans. He combines fresh creativity with technical excellence. He's not just a developer - he's a partner in your vision. Plus, he offers flexible pricing and discounts for the right clients!"
+        },
+        {
+          patterns: [/\b(are you professional|can you deliver quality|trustworthy|reliable)\b/],
+          response: "Absolutely! Despite his young age, Raja has delivered multiple successful projects. His work speaks for itself - check out his portfolio! He's professional, responsive, and committed to delivering top-notch results every time."
+        },
+        // ==================== WEB DEVELOPMENT BASICS ====================
+        {
+          patterns: [/\b(what is web development|what is web dev|define web development|what does web developer do)\b/],
+          response: "Web development is the process of building and maintaining websites and web applications. It involves coding (HTML, CSS, JavaScript), designing user interfaces, server-side programming, database management, and ensuring websites are fast, secure, and user-friendly. Think of it as building your business's digital home on the internet!"
+        },
+        {
+          patterns: [/\b(what is frontend|front end|front-end)\b/],
+          response: "Frontend development is the part of web development that focuses on what users see and interact with - the visual design, layouts, buttons, menus, and animations. It uses languages like HTML, CSS, and JavaScript with frameworks like React to create beautiful, interactive user interfaces."
+        },
+        {
+          patterns: [/\b(what is backend|back end|back-end|server side)\b/],
+          response: "Backend development is the invisible magic behind websites - it handles data, user accounts, payments, databases, and server logic. It's what makes websites functional beyond just looks. Raja uses Node.js and other technologies to build powerful backends."
+        },
+        {
+          patterns: [/\b(full stack|fullstack|full-stack)\b/],
+          response: "Full-stack development means working on both frontend (what users see) and backend (server/database) of websites. Raja is a full-stack developer - he can build entire websites from scratch, including the design, features, and database!"
+        },
+        {
+          patterns: [/\b(what is html|what does html do)\b/],
+          response: "HTML (HyperText Markup Language) is the skeleton of every website. It defines the structure - headings, paragraphs, images, links, buttons, and all content. Without HTML, there would be no website!"
+        },
+        {
+          patterns: [/\b(what is css|style|cascading)\b/],
+          response: "CSS (Cascading Style Sheets) is what makes websites beautiful! It controls colors, fonts, layouts, animations, and the overall visual appearance. It's like the paint, decorations, and interior design for your website."
+        },
+        {
+          patterns: [/\b(what is javascript|js|script)\b/],
+          response: "JavaScript is the programming language that makes websites interactive. It powers features like form validation, animations, sliders, chatbots, and dynamic content updates. It's what transforms a static page into a dynamic web application!"
+        },
+        {
+          patterns: [/\b(what is react|what is nextjs|vue|angular)\b/],
+          response: "React and Next.js are modern JavaScript frameworks/frameworks for building fast, interactive websites. They're like advanced tools that make development faster and websites more powerful. Raja specializes in React and Next.js for building cutting-edge web applications."
+        },
+        // ==================== WHY BUSINESSES NEED WEBSITES ====================
+        {
+          patterns: [/\b(why does every business need a website|why business need website|why company need website|why website for business)\b/],
+          response: "Every business needs a website because: 1) It's your 24/7 online store - customers can find you anytime. 2) It builds credibility and trust - people research before buying. 3) It reaches more customers beyond your local area. 4) It's cheaper than traditional advertising. 5) It provides customer support and information instantly. 6) Your competitors definitely have one! 7) It enables online sales and bookings. In today's digital world, no business can thrive without an online presence!"
+        },
+        {
+          patterns: [/\b(why online presence matters|why digital presence|why internet presence)\b/],
+          response: "Your online presence is your digital reputation! Most customers Google businesses before contacting them. A strong online presence: builds trust, attracts new customers 24/7, competes with bigger companies, and grows your business exponentially. Without it, you're invisible to potential customers searching for services like yours!"
+        },
+        {
+          patterns: [/\b(benefits of website|advantages of having a website|why create website)\b/],
+          response: "Key benefits of having a website: 24/7 availability, global reach, cost-effective marketing, increased credibility, direct customer communication, showcase products/services, collect leads, sell products online, build brand identity, compete with larger businesses, and track customer data. It's the best investment for any business!"
+        },
+        {
+          patterns: [/\b(can i sell online|can i make money online|ecommerce benefit|online store benefit)\b/],
+          response: "Absolutely! An e-commerce website lets you sell products 24/7 to customers anywhere in the world. Benefits include: lower costs than physical stores, unlimited inventory space, automatic sales, accept payments online, reach global customers, and scale your business anytime. Raja can build you a complete online store!"
+        },
+        {
+          patterns: [/\b(website vs social media|why website over facebook|why not just social media)\b/],
+          response: "While social media is great, a website is essential because: you own your content (no algorithm changes), more professional credibility, better SEO/ranking on Google, complete control over branding, direct customer data ownership, and it's a permanent hub. Use social media to drive traffic to your website where you convert visitors into customers!"
+        },
+        // ==================== PRICING & DISCOUNTS ====================
+        {
+          patterns: [/\b(price|cost|how much|quote|estimate|budget|cheap|expensive|payment|fee|charges)\b/],
+          response: "Raja offers flexible pricing: Starter Website: $50-$150 | Business Website: $200-$500 | 3D Website Package: $1k-$10k | Monthly Plans: Starter at $197/month or Pro at $279/month (includes AI chatbot, priority support, and more). Prices vary based on complexity, features, and timeline. AND YES - Raja CAN give you a discount! Just ask about special offers or discuss your budget. He loves helping great projects come to life!"
+        },
+        {
+          patterns: [/\b(discount|discounts|offer|offers|special price|reduced|cheaper|deal| Deals)\b/],
+          response: "Awesome that you asked! Raja offers various discounts: - Early bird discounts for new clients - Special rates for startups and students - Bundle packages for multiple services - Referral discounts - Negotiable pricing based on project scope! Don't be shy - ask Raja directly about discounts at rarblowup@gmail.com. He's always open to creating win-win deals!"
+        },
+        {
+          patterns: [/\b(free demo|demo website|trial|try before buy)\b/],
+          response: "Yes! Raja offers FREE demo websites for select clients. It's a great way to see his work quality before committing. Ask him about this opportunity when you reach out!"
+        },
+        {
+          patterns: [/\b(payment plans|installment|monthly payment|pay in parts)\b/],
+          response: "Raja offers flexible payment options! You can pay a deposit to start and the rest upon completion, or opt for monthly plans ($197-$279/month) for ongoing support. Discuss your preferred payment structure when you contact him."
+        },
+        // ==================== SERVICES ====================
         {
           patterns: [/\b(services|what do you do|what can you build|offer|services)\b/],
-          response: "Raja builds everything from fast landing pages to complex e-commerce stores, fully-featured AI products, and highly interactive 3D web apps."
+          response: "Raja builds: 1) Stunning landing pages 2) Business websites 3) E-commerce stores 4) Portfolio sites 5) AI-powered applications 6) 3D interactive websites 7) Web apps and platforms 8) Chatbots and automation 9) SEO optimization 10) Website maintenance. Basically, if you can imagine it, he can build it!"
         },
         {
-          patterns: [/\b(time|how long|duration|fast|speed|deadline)\b/],
-          response: "Speed is a priority. Simple landing pages can take a few days, while complex platforms might take a few weeks. It always depends on your specific requirements."
-        },
-        // Projects & Experience
-        {
-          patterns: [/\b(portfolio|projects|work|experience|built|fooux|aura)\b/],
-          response: "Raja has built over 4 major platforms, including Fooux, Aura Commerce, and many premium client sites. You can see his best work in the 'Selected Works' section of this site!"
+          patterns: [/\b(what is ai integration|ai chatbot|artificial intelligence|smart features)\b/],
+          response: "AI integration means adding intelligent features to your website like: smart chatbots that answer customer questions 24/7, automated responses, personalized recommendations, voice assistants, predictive analytics, and automation of repetitive tasks. Raja specializes in building AI-powered web experiences!"
         },
         {
-          patterns: [/\b(fooux|what is fooux)\b/],
-          response: "Fooux is Raja's flagship AI tool designed to help everyday people build their own Business Empire. He's currently looking for investments and raising funds to scale it globally."
-        },
-        // General Web FAQs
-        {
-          patterns: [/\b(mobile|responsive|phone|tablet|ipad)\b/],
-          response: "Absolutely. Every built website is 100% mobile-first and responsive. It will look perfect on phones, tablets, and massive desktop screens."
+          patterns: [/\b(3d website|threejs|immersive|interactive|3d experience)\b/],
+          response: "Raja creates stunning 3D websites using Three.js! These are immersive experiences where users can interact with 3D elements, explore products in 3D, and enjoy mind-blowing animations. Perfect for brands that want to stand out from the crowd. Packages start at $1k!"
         },
         {
-          patterns: [/\b(seo|search engine|google|rank|traffic)\b/],
-          response: "Yes, SEO is prioritized from day one. Raja uses semantic HTML, fast load times, and proper meta tags to ensure your site is loved by Google."
+          patterns: [/\b(logo design|branding|identity|brand design)\b/],
+          response: "While Raja specializes in web development, he can connect you with talented designers for logos and branding. Alternatively, he can integrate professional brand elements into your website design."
+        },
+        // ==================== TECHNICAL QUESTIONS ====================
+        {
+          patterns: [/\b(mobile|responsive|phone|tablet|ipad|mobile friendly)\b/],
+          response: "Absolutely! Every website Raja builds is 100% mobile-first and fully responsive. It will look perfect and work flawlessly on iPhones, Android phones, tablets, laptops, and large desktop screens. Mobile responsiveness is non-negotiable in today's world!"
         },
         {
-          patterns: [/\b(ecommerce|shop|store|sell|buy|checkout|stripe)\b/],
-          response: "Looking to sell online? Raja can build highly custom e-commerce stores with secure payment gateways so you can start making money instantly."
+          patterns: [/\b(seo|search engine|google|rank|traffic|search optimization)\b/],
+          response: "SEO (Search Engine Optimization) is built into every project! Raja uses: proper semantic HTML, fast load speeds, meta tags, optimized images, mobile-first design, and clean code. This helps your site rank higher on Google and get more organic traffic. Want to be found? Ask about SEO packages!"
         },
         {
-          patterns: [/\b(maintain|support|after launch|updates|help me later)\b/],
-          response: "The relationship doesn't end at launch. Raja offers continuous support, maintenance, and updates to ensure your website scales as your business grows."
+          patterns: [/\b(speed|fast|loading|performance|optimization)\b/],
+          response: "Speed is a top priority! Raja uses: optimized images, lazy loading, code splitting, caching strategies, and modern frameworks to ensure blazing fast load times. A fast website = better user experience + better Google ranking!"
         },
         {
-          patterns: [/\b(domain|host|server|aws|vercel)\b/],
-          response: "You don't have to worry about the technical setup. Raja handles deployment on blazing-fast servers and can point your custom domain exactly where it needs to go."
+          patterns: [/\b(secure|security|ssl|https|protection)\b/],
+          response: "Security is handled! Raja implements: SSL certificates (HTTPS), secure data handling, protection against common vulnerabilities, and follows security best practices. Your website and user data will be safe and secure."
         },
         {
-          patterns: [/\b(revision|change|i don't like it|fix)\b/],
-          response: "Client satisfaction is everything. Revisions are part of the process—Raja refines the design until it matches your exact vision."
+          patterns: [/\b(ecommerce|shop|store|sell|buy|checkout|stripe|payment gateway|paypal)\b/],
+          response: "Looking to sell online? Raja builds fully-featured e-commerce stores with: secure payment gateways (Stripe, PayPal, etc.), shopping carts, inventory management, order processing, customer accounts, and mobile-friendly checkout. Start selling today!"
         },
-        // Communication & Hiring
         {
-          patterns: [/\b(hire|job|contact|email|meeting|talk|start|begin|how to)\b/],
-          response: "Ready to start? You can email Raja directly at rarblowup@gmail.com, or reach out on Instagram @rar_turk. Let's build something serious.",
+          patterns: [/\b(domain|host|server|aws|vercel|netlify|dns|domain name)\b/],
+          response: "Don't worry about the technical stuff! Raja handles everything: domain registration, hosting setup, deployment on fast servers (Vercel, Netlify, AWS), and DNS configuration. You just focus on your business!"
+        },
+        {
+          patterns: [/\b(maintain|support|after launch|updates|help me later|maintenance)\b/],
+          response: "The relationship doesn't end at launch! Raja offers: ongoing maintenance, security updates, content changes, feature additions, performance monitoring, and technical support. Ask about monthly support plans to keep your site running perfectly!"
+        },
+        {
+          patterns: [/\b(backup|data backup|recovery)\b/],
+          response: "Yes, Raja implements regular backup strategies for your website data. In case of any issues, your data can be restored quickly. Ask about the backup plan for your specific project!"
+        },
+        // ==================== TIMELINE & PROCESS ====================
+        {
+          patterns: [/\b(time|how long|duration|fast|speed|deadline|turnaround|when ready)\b/],
+          response: "Project timelines vary: Simple landing page: 3-5 days | Business website: 1-2 weeks | E-commerce store: 2-4 weeks | Custom web app: 4-8 weeks | 3D immersive sites: 4-12 weeks. Exact timeline depends on your specific requirements. Rush orders may be available!"
+        },
+        {
+          patterns: [/\b(process|how does it work|steps|workflow|what happens next)\b/],
+          response: "Working with Raja is simple: 1) You contact him with your idea/requirements. 2) He reviews and sends a quote & timeline. 3) You approve and pay deposit. 4) He designs and develops your site. 5) You review and request revisions. 6) Final payment & launch! It's that easy!"
+        },
+        {
+          patterns: [/\b(revision|change|i don't like it|fix|modify|update)\b/],
+          response: "Client satisfaction is priority! Revisions are included in the process - Raja refines the design until it matches your exact vision. Just communicate your feedback clearly and he'll make it right!"
+        },
+        {
+          patterns: [/\b(contract|agreement|terms|legal|before start)\b/],
+          response: "Yes, Raja provides clear contracts covering: project scope, deliverables, timeline, payment terms, revision limits, and ownership rights. This ensures both parties are protected. Don't worry - it's straightforward and professional!"
+        },
+        // ==================== PROJECT & EXPERIENCE ====================
+        {
+          patterns: [/\b(portfolio|projects|work|experience|built|showcase|previous work)\b/],
+          response: "Raja has built over 4 major platforms including Fooux (AI tool), Aura Commerce, and many premium client sites. Check out his 'Selected Works' section on this website to see his real projects! Each project showcases different skills."
+        },
+        {
+          patterns: [/\b(fooux|what is fooux|fooux ai)\b/],
+          response: "Fooux is Raja's flagship AI tool designed to help everyday people build their own Business Empire. It's an AI-powered platform that simplifies business creation and management. Raja is currently raising funds to scale Fooux globally!"
+        },
+        {
+          patterns: [/\b(aura|what is aura)\b/],
+          response: "Aura Commerce is one of Raja's premium e-commerce projects - a fully-featured online store with beautiful design and powerful functionality. It showcases his ability to build complete commercial platforms!"
+        },
+        {
+          patterns: [/\b(clients|customers|testimonials|reviews|feedback|who have you worked with)\b/],
+          response: "Raja has worked with various clients globally, from startups to established businesses. Each project is unique and tailored to the client's needs. Contact him to see specific case studies and client references!"
+        },
+        {
+          patterns: [/\b(experience|years of experience|how long)\b/],
+          response: "Raja has been coding and building websites for several years, starting at a very young age. Despite being 14, his practical experience and portfolio speak volumes. Quality matters more than age!"
+        },
+        // ==================== GOALS & VISION ====================
+        {
+          patterns: [/\b(target|goal|vision|mission|dream|ambition|9999|trillion|change the world)\b/],
+          response: "Raja's ultimate goal is to hit $9,999 TRILLION (yes, trillion!) and change the world forever through AI and software. He's building Fooux and other AI products to achieve this massive vision. The sky is not the limit - it's just the beginning!"
+        },
+        {
+          patterns: [/\b(future|plans|roadmap|what's next)\b/],
+          response: "Raja's future plans include: scaling Fooux globally, building more AI-powered products, working with international clients, and eventually creating a tech empire. He's just getting started!"
+        },
+        {
+          patterns: [/\b(investor|investment|funding|raise money|venture)\b/],
+          response: "Raja is actively looking for investors to scale Fooux and his other AI projects. If you're interested in investing in a young, visionary developer, reach out! Big things are coming!"
+        },
+        // ==================== SKILLS & TECH ====================
+        {
+          patterns: [/\b(skills|tech stack|languages|tools|react|tailwind|node|javascript|framework|code)\b/],
+          response: "Raja's tech stack: Frontend - React, Next.js, TypeScript, Tailwind CSS, Framer Motion | Backend - Node.js, Express | Database - MongoDB, PostgreSQL | AI - OpenAI integration, custom chatbots | 3D - Three.js | Deployment - Vercel, Netlify, AWS. He's always learning new technologies!"
+        },
+        {
+          patterns: [/\b(3d|animations|motion|animated|gsap|threejs|interactive)\b/],
+          response: "Yes! Raja builds immersive 3D experiences using Three.js and creates ultra-smooth animations with Framer Motion and GSAP. His websites don't just look good - they come alive with interactive elements that wow visitors!"
+        },
+        {
+          patterns: [/\b(database|mongodb|postgresql|sql|data storage)\b/],
+          response: "Raja works with various databases: MongoDB for flexible document storage, PostgreSQL for structured data, and more. He chooses the best database solution based on your project's specific needs."
+        },
+        {
+          patterns: [/\b(api|rest api|integration|third party|connect)\b/],
+          response: "Yes! Raja can integrate with third-party APIs: payment gateways (Stripe, PayPal), social logins (Google, Facebook), mapping (Google Maps), email services, CRMs, and any other service with a public API. Just ask!"
+        },
+        // ==================== COMMUNICATION & HIRING ====================
+        {
+          patterns: [/\b(hire|job|contact|email|meeting|talk|start|begin|how to|work with you|available for hire)\b/],
+          response: "Ready to start? Contact Raja at rarblowup@gmail.com or reach out on Instagram @rar_turk. Tell him about your project and he'll get back to you with a custom quote. Let's build something amazing together!",
           action: true
         },
-        // Greetings & pleasantries
         {
-          patterns: [/\b(hi|hello|hey|yo|greetings|wassup|what's up)\b/],
-          response: "Hello there! I'm Azmuth (AI Assistant). I know everything about Raja, web development, and his incredible projects. What would you like to know?"
+          patterns: [/\b(email|email address|contact email|where to email)\b/],
+          response: "You can email Raja directly at rarblowup@gmail.com - he usually responds within 24 hours. Also available on Instagram @rar_turk for quick chats!",
+          action: true
         },
         {
-          patterns: [/\b(thanks|thank you|thx|appreciate)\b/],
-          response: "You're very welcome! Let me know if there's anything else you're curious about."
+          patterns: [/\b(instagram|social media|social|instagram|twitter|x|tiktok)\b/],
+          response: "Connect with Raja on Instagram: @rar_turk. Follow for updates on his latest projects and behind-the-scenes content!",
+          action: true
         },
         {
-          patterns: [/\b(bye|goodbye|cya|see ya|later)\b/],
-          response: "Catch you later! Keep innovating and reach out when you're ready to build."
+          patterns: [/\b(whatsapp|phone|call|number|telegram)\b/],
+          response: "For quickest response, email Raja at rarblowup@gmail.com or DM on Instagram @rar_turk. He'll share WhatsApp or other contact details once you connect!"
         },
-        // AI specifically
         {
-          patterns: [/\b(who are you|what are you|what is this|bot|ai|azmuth)\b/],
-          response: "I am Azmuth, the super-smart AI Assistant representing Raja. Think of me as the all-knowing guide to Raja's web development universe!"
+          patterns: [/\b(timezone|available hours|when available|working hours)\b/],
+          response: "Raja is based in Pakistan (PKT timezone) but works with global clients. He's flexible with meeting times and usually available most days. Just coordinate with him directly!"
+        },
+        // ==================== TECHNICAL HELP ====================
+        {
+          patterns: [/\b(what is wordpress|should i use wordpress|wix|squarespace|sitebuilder)\b/],
+          response: "While WordPress, Wix, and Squarespace are good for simple sites, Raja builds custom websites that are faster, more secure, and fully tailored to your needs. Custom sites rank better, look unique, and scale with your business. For a premium, professional result, go custom!"
+        },
+        {
+          patterns: [/\b(hosting|free hosting|cheap hosting|which hosting)\b/],
+          response: "Raja recommends premium hosting like Vercel or Netlify for performance and reliability. He handles the hosting setup for you - you don't need to worry about the technical details!"
+        },
+        {
+          patterns: [/\b(domain name|buy domain|register domain|how to get domain)\b/],
+          response: "Raja can help you find and register the perfect domain name! He handles everything - you just tell him what you want. Domain prices typically range from $10-50/year depending on the name."
+        },
+        {
+          patterns: [/\b(website maintenance|monthly cost|ongoing cost|how much to maintain)\b/],
+          response: "Monthly maintenance typically costs $50-200 depending on updates needed. Alternatively, Raja offers monthly support plans starting at $197/month which includes hosting, updates, and priority support!"
+        },
+        // ==================== GENERAL QUESTIONS ====================
+        {
+          patterns: [/\b(can you help me|i need a website|i want a website|build me a website|create website)\b/],
+          response: "Absolutely! Raja would love to help you. Just email him at rarblowup@gmail.com or DM on Instagram @rar_turk with details about what you need. He'll get back to you with a custom quote and timeline!",
+          action: true
+        },
+        {
+          patterns: [/\b(what can i ask you|what do you know|help me|what questions)\b/],
+          response: "You can ask me anything about: Raja and his background, web development basics, why every business needs a website, why choose RAR, pricing and discounts, services offered, timeline and process, technical features (SEO, mobile, security), ongoing support, and more. Try asking!"
+        },
+        {
+          patterns: [/\b(cool|awesome|amazing|impressive|great)\b/],
+          response: "Thank you! I aim to please. 😄 Want to see more? Check out Raja's portfolio or ask about starting your own project!"
+        },
+        // ==================== GREETINGS & PLEASANTRIES ====================
+        {
+          patterns: [/\b(hi|hello|hey|yo|greetings|wassup|what's up|good morning|good evening|good afternoon)\b/],
+          response: "Hello there! I'm Azmuth, your AI assistant. I know everything about Raja, web development, why businesses need websites, pricing, discounts, and much more. What would you like to know?"
+        },
+        {
+          patterns: [/\b(thanks|thank you|thx|appreciate|grateful)\b/],
+          response: "You're very welcome! Happy to help. Let me know if there's anything else you'd like to ask - I'm here to answer all your questions about Raja and his services!"
+        },
+        {
+          patterns: [/\b(bye|goodbye|cya|see ya|later|good night)\b/],
+          response: "Catch you later! Keep innovating and when you're ready to build your dream website, you know where to find Raja. See you soon!"
+        },
+        {
+          patterns: [/\b(ok|okay|alright|sure|no problem|got it)\b/],
+          response: "Great! Let me know if you want to know more about anything - pricing, services, why businesses need websites, or anything else!"
+        },
+        // ==================== AI & BOT QUESTIONS ====================
+        {
+          patterns: [/\b(who are you|what are you|what is this|bot|ai|azmuth|are you human)\b/],
+          response: "I am Azmuth, the super-smart AI Assistant representing Raja! Think of me as your guide to everything about Raja, web development, and building successful online businesses. I was created to help answer all your questions instantly!"
+        },
+        {
+          patterns: [/\b(are you real|are you alive|can you think)\b/],
+          response: "I'm an AI assistant built to help you - think of me as a really smart robot that knows all about Raja's work! I don't sleep, don't get tired, and I'm available 24/7 to answer your questions!"
+        },
+        {
+          patterns: [/\b(how were you created|who made you|built you)\b/],
+          response: "I was created by Raja using advanced AI technologies! He built me to be his digital assistant, helping visitors learn about his services, answer questions, and guide them to start their projects."
         }
       ];
 
       let matched = false;
-      for (const intent of intents) {
-        if (intent.patterns.some(pattern => pattern.test(lowerInput))) {
-          botResponse = intent.response;
-          if (intent.action) isContactAction = true;
-          matched = true;
-          break;
+      let userName = "";
+
+      // Detect if user introduces themselves (e.g., "I am John" or "My name is...")
+      const nameMatch = userMessage.match(/(?:i am|my name is|i'm|this is)\s+([a-zA-Z]+)/i);
+      if (nameMatch) {
+        userName = nameMatch[1];
+        botResponse = `Nice to meet you, ${userName}! 👋 I'm Azmuth, your AI assistant. I can help you with:\n\n🔹 Why you should choose RAR for your project\n🔹 Detailed pricing and DISCOUNTS\n🔹 Services offered (websites, AI, 3D, ecommerce)\n🔹 Why every business needs a website\n🔹 Technical questions (SEO, mobile, security)\n🔹 How to get started\n\nWhat would you like to know? Just ask away!`;
+        matched = true;
+      }
+
+      if (!matched) {
+        for (const intent of intents) {
+          if (intent.patterns.some(pattern => pattern.test(lowerInput))) {
+            botResponse = intent.response;
+            if (intent.action) isContactAction = true;
+            matched = true;
+            break;
+          }
         }
       }
 
       if (!matched) {
-        botResponse = "Hmm, I'm not entirely sure about that specific detail, but I know everything about Raja's web design, pricing, and AI vision! Try asking me about 'pricing', 'tech stack', 'SEO', or just ask 'Who is Raja?'.";
+        botResponse = "Hmm, I'm not entirely sure about that specific detail, but I know everything about Raja's web design, pricing, discounts, why businesses need websites, and AI vision! Try asking me about:\n\n💰 'What are your prices?' or 'Do you give discounts?'\n🌐 'Why should I choose RAR?'\n💻 'What is web development?'\n🚀 'Why do businesses need websites?'\n\nOr just ask 'Who is Raja?' to get started!";
       }
 
       setMessages(prev => [...prev, { role: 'bot', text: botResponse, isContactAction }]);
@@ -725,11 +913,11 @@ function Chatbot() {
   return (
     <>
       <button
-        type="button"
-        onPointerDown={(e) => { e.preventDefault(); e.stopPropagation(); setIsOpen(!isOpen); }}
-        onClick={(e) => { e.preventDefault(); e.stopPropagation(); setIsOpen(!isOpen); }}
-        style={{ zIndex: 99999, pointerEvents: 'auto' }}
-        className="fixed bottom-6 right-6 w-14 h-14 bg-black border-[3px] border-[#0ceb3f] rounded-full flex items-center justify-center shadow-[0_0_20px_rgba(12,235,63,0.4)] hover:scale-110 active:scale-95 transition-transform group cursor-pointer"
+          type="button"
+          onPointerDown={(e) => { e.preventDefault(); e.stopPropagation(); setIsOpen(!isOpen); }}
+          onClick={(e) => { e.preventDefault(); e.stopPropagation(); setIsOpen(!isOpen); }}
+          style={{ zIndex: 99999, pointerEvents: 'auto' }}
+          className="fixed bottom-6 right-6 w-14 h-14 bg-black border-[3px] border-[#0ceb3f] rounded-full flex items-center justify-center shadow-[0_0_20px_rgba(12,235,63,0.4)] hover:scale-110 active:scale-95 transition-transform group cursor-pointer relative"
       >
         <svg viewBox="0 0 100 100" className="w-10 h-10 group-hover:rotate-180 transition-transform duration-300 ease-in-out drop-shadow-[0_0_8px_rgba(12,235,63,0.5)] pointer-events-none">
           <circle cx="50" cy="50" r="48" fill="black" />
@@ -738,6 +926,7 @@ function Chatbot() {
           <path d="M 15 42 A 36 36 0 0 1 42 15" fill="none" stroke="white" strokeWidth="8" strokeLinecap="round" />
           <circle cx="18" cy="55" r="5" fill="white" />
         </svg>
+        <span className="absolute bottom-1 right-1 w-2 h-2 bg-green-500 rounded-full animate-ping"></span>
       </button>
 
       {isOpen && (
