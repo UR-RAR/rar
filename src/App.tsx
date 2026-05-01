@@ -146,11 +146,6 @@ function HeroSection() {
             </a>
           </motion.div>
 
-          {/* Decorative Animation: place a small sprite on desktop for visual flair */}
-          <div className="hidden lg:block absolute bottom-8 right-8 pointer-events-none" aria-label="sprite-animation">
-            <img src="https://img.itch.zone/aW1nLzI1NDE2MTg3LmdpZg==/original/cTmtfb.gif" alt="Azmuth Sprite" style={{ width: 180, height: 'auto' }} />
-          </div>
-
         </div>
 
       </div>
