@@ -187,7 +187,8 @@ function HeroSection() {
   );
 }
 
-const pricingPlans = [
+// Pricing in two modes: Setup (one-time) and Monthly (subscription)
+const setupPlans = [
   {
     name: "Starter Website",
     price: "$50-$150",
@@ -206,76 +207,39 @@ const pricingPlans = [
   },
 ];
 
+const monthlyPlans = [
+  {
+    name: "Starter Monthly",
+    price: "$197 / month",
+    features: [
+      "AI chatbot integration",
+      "Email & chat support",
+      "SEO basics & analytics",
+      "Content generation tools",
+      "1 monthly website optimization",
+    ],
+  },
+  {
+    name: "Pro Monthly",
+    price: "$279 / month",
+    features: [
+      "AI chatbot with advanced intents",
+      "Priority support and onboarding",
+      "AI-powered marketing automations",
+      "Dedicated assistant for your project",
+      "Monthly analytics & insights dashboard",
+    ],
+    popular: true,
+  },
+];
+
 function ServicesSection() {
-  // Pricing mode toggle: setup vs monthly
   const [mode, setMode] = useState<"setup" | "monthly">("setup");
-
-  // Setup prize (one-time) plans
-  const setupPlans = [
-    {
-      name: "Setup Prize",
-      basePrice: 1000,
-      price: "One-time",
-      features: [
-        "Project scoping & kickoff",
-        "Initial design & branding guidelines",
-        "Content migration (up to 5 pages)",
-        "Basic on-page SEO setup",
-        "Technical architecture & deployment plan",
-      ],
-    },
-  ];
-
-  // Monthly prize plans
-  const monthlyPlans = [
-    {
-      name: "AI Starter Monthly",
-      price: "$197 / month",
-      features: [
-        "AI chatbot integration for user support",
-        "Priority support (24-48h response)",
-        "Analytics dashboard with insights",
-        "Content Management System access",
-        "Premium templates & components",
-        "Hosting & deployment included",
-        "Monthly feature updates",
-        "SSL certificate included",
-      ],
-    },
-    {
-      name: "AI Pro Monthly",
-      price: "$279 / month",
-      features: [
-        "AI chatbot with advanced intents & training",
-        "CRM integration options",
-        "Dedicated account manager",
-        "Custom domain & advanced SSL",
-        "Uptime SLA & security hardening",
-        "Weekly performance reports",
-        "Priority feature development requests",
-        "Access to beta features",
-      ],
-    },
-  ];
-
-  // Choose which plans to render based on mode
-  const plansToRender = mode === "setup" ? setupPlans : monthlyPlans;
-
-  // Helper to render price string, including discount for Setup Prize when monthly mode
-  const renderPrice = (plan: any) => {
-    // If this is the Setup Prize and monthly mode is active, apply 40% off
-    if (plan.name === "Setup Prize" && mode === "monthly") {
-      const base = plan.basePrice ?? 1000;
-      const discounted = Math.round(base * 0.6);
-      return `$${discounted} / one-time`;
-    }
-    return plan.price;
-  };
-
+  const plans = mode === "setup" ? setupPlans : monthlyPlans;
   return (
     <section className="py-32 px-6 lg:px-10 bg-gray-50 relative">
       <div className="max-w-6xl mx-auto">
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-8">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-6 gap-8">
           <div>
             <span className="text-xs font-bold uppercase tracking-[0.2em] text-gray-400 block mb-4">
               01 / What I Build
@@ -289,26 +253,23 @@ function ServicesSection() {
           </p>
         </div>
 
-        {/* Pricing mode toggle */}
-        <div className="flex items-center justify-end mb-6">
-          <div className="flex rounded-full bg-white border border-gray-200 p-1 shadow-sm" aria-label="Pricing Toggle">
-            <button
-              onClick={() => setMode("setup")}
-              className={`px-5 py-2 rounded-full font-semibold text-sm ${mode === "setup" ? "bg-gray-900 text-white" : "bg-white text-gray-800"} transition-colors`}
-            >
-              Setup Prize
-            </button>
-            <button
-              onClick={() => setMode("monthly")}
-              className={`px-5 py-2 rounded-full font-semibold text-sm ${mode === "monthly" ? "bg-gray-900 text-white" : "bg-white text-gray-800"} transition-colors`}
-            >
-              Monthly Prize
-            </button>
+        {/* Pricing Mode Toggle */}
+        <div className="flex items-center justify-center gap-4 mb-6">
+          <span className={`px-3 py-2 rounded-md text-sm font-semibold ${mode === "setup" ? 'bg-black text-white' : 'text-gray-700'}`} onClick={() => setMode("setup")} style={{ cursor: 'pointer' }}>
+            Setup
+          </span>
+          <div className="w-20 h-8 bg-gray-200 rounded-full flex items-center px-1 cursor-pointer" onClick={() => setMode(mode === 'setup' ? 'monthly' : 'setup')} style={{ userSelect: 'none' }}>
+            <div className={`h-6 w-6 bg-white rounded-full shadow-md transform ${mode === 'setup' ? 'translate-x-0' : 'translate-x-12'}`} style={{ transition: 'transform 200ms' }} />
           </div>
+          <span className={`px-3 py-2 rounded-md text-sm font-semibold ${mode === "monthly" ? 'bg-black text-white' : 'text-gray-700'}`} onClick={() => setMode("monthly")} style={{ cursor: 'pointer' }}>
+            Monthly
+          </span>
         </div>
-
+        
+        {/* Pricing Cards */}
+      
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {plansToRender.map((plan, i) => (
+          {plans.map((plan, i) => (
             <motion.div
               key={i}
               initial={{ opacity: 0, y: 40 }}
@@ -325,10 +286,7 @@ function ServicesSection() {
                 </div>
               )}
               <h3 className="text-2xl font-semibold mb-2">{plan.name}</h3>
-              <div className="text-4xl font-serif mb-8 text-gray-900">{renderPrice(plan)}</div>
-              {plan.name === "Setup Prize" && mode === "monthly" && (
-                <div className="text-sm text-gray-500">Was ${plan.basePrice ?? 1000} before discount</div>
-              )}
+              <div className="text-4xl font-serif mb-8 text-gray-900">{ (plan.price as any) }</div>
               
               <ul className="space-y-4 mb-10">
                 {plan.features.map((feature, j) => (
