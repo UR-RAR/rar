@@ -126,6 +126,7 @@ function HeroSection() {
                }}
              />
           </motion.div>
+          </motion.div>
 
           {/* Right Side Floating (Desktop) */}
           <motion.div
