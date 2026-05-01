@@ -97,7 +97,7 @@ function HeroSection() {
         {/* Main Interactive Row (Image + Floating Text) */}
         <div className="relative w-full flex-1 flex flex-col lg:block mt-8 lg:mt-0 min-h-[45vh] md:min-h-[50vh]">
           
-          {/* Left Side Floating (Desktop) */}
+{/* Left Side Floating (Desktop) */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
@@ -108,6 +108,7 @@ function HeroSection() {
               <img src="https://cdn.modrinth.com/data/ZeVD5ZBy/b648f2683cd0bf1e09c784ff814d71ba02180305.gif" alt="Available" className="w-8 h-8 rounded-full object-cover" />
               <span className="text-sm font-semibold tracking-tight text-gray-800 pr-2">Available for projects now</span>
             </div>
+          </motion.div>
 
           {/* The Actual Image Overlapping */}
           <motion.div
@@ -117,15 +118,14 @@ function HeroSection() {
             className="w-[90%] max-w-[340px] md:max-w-[450px] lg:max-w-[550px] mx-auto z-20 relative lg:absolute lg:bottom-0 lg:left-1/2 lg:-translate-x-1/2 flex justify-center items-end h-[100%] lg:h-[120%]"
           >
              <img
-               src={meImage}
-               alt="Raja Abdul Rehman"
-               className="w-full h-auto object-contain object-bottom drop-shadow-[0_20px_40px_rgba(0,0,0,0.1)]"
-               style={{ 
-                 maskImage: 'linear-gradient(to bottom, black 80%, transparent 100%)', 
-                 WebkitMaskImage: 'linear-gradient(to bottom, black 80%, transparent 100%)' 
-               }}
-             />
-          </motion.div>
+                src={meImage}
+                alt="Raja Abdul Rehman"
+                className="w-full h-auto object-contain object-bottom drop-shadow-[0_20px_40px_rgba(0,0,0,0.1)]"
+                style={{ 
+                  maskImage: 'linear-gradient(to bottom, black 80%, transparent 100%)', 
+                  WebkitMaskImage: 'linear-gradient(to bottom, black 80%, transparent 100%)' 
+                }}
+              />
           </motion.div>
 
           {/* Right Side Floating (Desktop) */}
